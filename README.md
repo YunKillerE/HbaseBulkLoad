@@ -1,0 +1,2 @@
+# HbaseBulkLoad
+基于BulkLoad的通用的hbase导入程序
