@@ -58,9 +58,16 @@ public class MapBlukLoad {
             String[] splited = BulkLoadUntils.fieldData(line,(context.getConfiguration().get("field")));
 
             //2，rowkey处理，调用untils中的rowkey函数
-            byte[] rowkeybytes = BulkLoadUntils.rowkeyBytes(splited);
+            String rowkeyLinetmp = context.getConfiguration().get("rowkeyLine");
+            String issubstring = context.getConfiguration().get("issubstring");
+            Integer substringbegin = Integer.valueOf(context.getConfiguration().get("substringbegin"));
+            Integer substringend = Integer.valueOf(context.getConfiguration().get("substringend"));
+            String HowNumLine = context.getConfiguration().get("HowNumLine");
+            String splitType = context.getConfiguration().get("splitType");
 
-            //3，列的处理，调用untils中的column函数
+            byte[] rowkeybytes = BulkLoadUntils.rowkeyBytes(splited,splitType,HowNumLine,rowkeyLinetmp,issubstring,substringbegin,substringend);
+
+            //3，列的处理，调用untils中的column函数 TODO 待增加功能
             ImmutableBytesWritable rowkey = new ImmutableBytesWritable(rowkeybytes);
             Put put = BulkLoadUntils.columnPut(rowkeybytes,splited);
 

@@ -1,13 +1,9 @@
-package nova.untils;
-
-import org.apache.hadoop.hbase.util.Bytes;
+package nova.RowKey;
 
 import java.util.Iterator;
 import java.util.TreeSet;
+import org.apache.hadoop.hbase.util.Bytes;
 
-/**
- * Created by yunchen on 2017/3/29.
- */
 public class HashChoreWoker implements SplitKeysCalculator{
     //随机取机数目
     private int baseRecord;
@@ -22,21 +18,23 @@ public class HashChoreWoker implements SplitKeysCalculator{
 
     public HashChoreWoker(int baseRecord, int prepareRegions) {
         this.baseRecord = baseRecord;
-        //实例化rowkey生成器
         rkGen = new HashRowKeyGenerator();
         splitKeysNumber = prepareRegions - 1;
+
         splitKeysBase = baseRecord / prepareRegions;
     }
 
     public byte[][] calcSplitKeys() {
         splitKeys = new byte[splitKeysNumber][];
-        //使用treeset保存抽样数据，已排序过
         TreeSet<byte[]> rows = new TreeSet<byte[]>(Bytes.BYTES_COMPARATOR);
+
         for (int i = 0; i < baseRecord; i++) {
             rows.add(rkGen.nextId());
         }
         int pointer = 0;
+
         Iterator<byte[]> rowKeyIter = rows.iterator();
+
         int index = 0;
         while (rowKeyIter.hasNext()) {
             byte[] tempRow = rowKeyIter.next();
@@ -49,10 +47,18 @@ public class HashChoreWoker implements SplitKeysCalculator{
             }
             pointer ++;
         }
+
         rows.clear();
         rows = null;
         return splitKeys;
     }
+
+    public static void main(String[] args) {
+        byte [][] temp = new HashChoreWoker(1000000, 38).calcSplitKeys();
+        
+        for(byte [] row : temp) {
+            System.out.println(Bytes.toStringBinary(row));
+        }
+    }
+
 }
-
-

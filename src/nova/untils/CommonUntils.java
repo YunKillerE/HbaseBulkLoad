@@ -1,5 +1,9 @@
 package nova.untils;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+import org.apache.hadoop.mapred.TestMerge;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -9,6 +13,8 @@ import java.util.Random;
  */
 
 public class CommonUntils {
+
+    public static final Log log = LogFactory.getLog(TestMerge.MyMapper.class);
 
     /**
      *
@@ -25,6 +31,8 @@ public class CommonUntils {
         }
         return sb.toString();
     }
+
+
 
     public static void test(){
         List<List> list = new ArrayList<>();

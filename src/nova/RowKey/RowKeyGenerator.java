@@ -1,4 +1,5 @@
-package nova.untils;
+package nova.RowKey;
+
 
 public interface RowKeyGenerator {
     byte [] nextId();

@@ -7,44 +7,18 @@
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
-    <orderEntry type="module-library">
-      <library>
-        <CLASSES>
-          <root url="file://E:/hadoop/hbase-1.2.4/lib" />
-        </CLASSES>
-        <JAVADOC />
-        <SOURCES />
-        <jarDirectory url="file://E:/hadoop/hbase-1.2.4/lib" recursive="false" />
-      </library>
-    </orderEntry>
     <orderEntry type="library" name="scala-sdk-2.10.5" level="application" />
     <orderEntry type="module-library">
       <library>
         <CLASSES>
-          <root url="jar://E:/hadoop/spark-1.6.3-bin-hadoop2.6/lib/spark-assembly-1.6.3-hadoop2.6.0.jar!/" />
+          <root url="file://E:/jars" />
         </CLASSES>
         <JAVADOC />
         <SOURCES>
-          <root url="jar://E:/hadoop/spark-1.6.3-bin-hadoop2.6/lib/spark-assembly-1.6.3-hadoop2.6.0.jar!/" />
+          <root url="file://E:/jars" />
         </SOURCES>
-      </library>
-    </orderEntry>
-    <orderEntry type="module-library">
-      <library>
-        <CLASSES>
-          <root url="jar://E:/hadoop/hadoop-2.7.3/share/hadoop/common/hadoop-common-2.7.3.jar!/" />
-        </CLASSES>
-        <JAVADOC />
-        <SOURCES />
-      </library>
-    </orderEntry>
-    <orderEntry type="module-library">
-      <library>
-        <CLASSES>
-          <root url="jar://E:/hadoop/hadoop-2.7.3/share/hadoop/hdfs/hadoop-hdfs-2.7.3.jar!/" />
-        </CLASSES>
-        <JAVADOC />
-        <SOURCES />
+        <jarDirectory url="file://E:/jars" recursive="false" />
+        <jarDirectory url="file://E:/jars" recursive="false" type="SOURCES" />
       </library>
     </orderEntry>
   </component>
