@@ -1,6 +1,10 @@
 # HbaseBulkLoad
 基于BulkLoad的通用的hbase导入程序
 
+
+   [配置文件](https://github.com/jimmy-src/HbaseBulkLoad/wiki/%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6)
+
+
 原理：
 
 1，通过 MapReduce 任务生成 HFile
