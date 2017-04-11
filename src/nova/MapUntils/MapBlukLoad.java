@@ -68,10 +68,18 @@ public class MapBlukLoad {
             byte[] rowkeybytes = BulkLoadUntils.rowkeyBytes(splited,splitType,HowNumLine,rowkeyLinetmp,issubstring,substringbegin,substringend);
 
             //3，列的处理，调用untils中的column函数 TODO 待增加功能
-            ImmutableBytesWritable rowkey = new ImmutableBytesWritable(rowkeybytes);
-            Put put = BulkLoadUntils.columnPut(rowkeybytes,splited);
+            String columnFamily = context.getConfiguration().get("columnFamily");
+            String columnsName = context.getConfiguration().get("columnsName");
+            String columnsName_qua = context.getConfiguration().get("columnsName_qua");
 
-            context.write(rowkey, put);
+            if(rowkeybytes.length > 0) {
+                ImmutableBytesWritable rowkey = new ImmutableBytesWritable(rowkeybytes);
+                Put put = BulkLoadUntils.columnPut(rowkeybytes, splited, columnFamily, columnsName, columnsName_qua);
+
+                context.write(rowkey, put);
+            }else{
+                System.out.println("rowkey获取到的值为空");
+            }
         }
     }
 

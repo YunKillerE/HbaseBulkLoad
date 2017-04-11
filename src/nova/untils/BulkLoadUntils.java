@@ -4,6 +4,9 @@ import org.apache.hadoop.hbase.client.Put;
 import org.apache.hadoop.hbase.util.Bytes;
 import org.apache.hadoop.hbase.util.MD5Hash;
 
+import java.util.Arrays;
+import java.util.List;
+
 /**
  * Created by yunchen on 2017/3/28.
  */
@@ -74,25 +77,21 @@ public class BulkLoadUntils {
         /**
          * 2，判断预分区方式，hash,partition,none，然后确定对应的rowkey组合方式
          */
+            //这里是通过hash方式进行rowkey设计
         if(splitType.equals("hash")) {
-            //单列截取列中的几个字符情况
+            //列截取列中的几个字符情况
             if (issubstring.equals("true") && numLineList.length == 1) {
                 rowkeybytes = Bytes.add(MD5Hash.getMD5AsHex(Bytes.toBytes(rowkeyline)).substring(substringbegin,
                         substringend).getBytes(), Bytes.toBytes(rowkeyline));
-                //单列不截取字符的情况
+                //列不截取字符的情况
             } else if (issubstring.equals("false") && numLineList.length == 1) {
                 rowkeybytes = Bytes.add(MD5Hash.getMD5AsHex(Bytes.toBytes(rowkeyline)).getBytes(),
                         Bytes.toBytes(rowkeyline));
-                //多列不截取字符的情况
-            }else if(issubstring.equals("false") && numLineList.length > 1){
-                System.out.println("功能待加入");
-                //多列截取字符的情况，两列截取相同的字符串，两列截取不同长度的字符串去年情况如果需要后面再加
-            }else if(issubstring.equals("false") && numLineList.length > 1){
-                System.out.println("功能待加入");
             }else {
                 System.out.println(issubstring + "input error!! only true or false");
                 System.exit(1);
             }
+            //这里通过partition方式分区时的rowkey设计
         }else if(splitType.equals("partition")){
             System.out.println("功能待加入");
             //这直接用某一个或者多个列作为rowkey
@@ -105,10 +104,12 @@ public class BulkLoadUntils {
 
         /**
          * TODO 这里判断rowkey是否有问题，比如是否为空，是否异常等等,这里可以考虑跳过还是自己退出
+         *
+         * 这里还是跳过吧，在下一步做一些判断，如果为空则什么都不做
          */
         if(rowkeybytes.length==0){
-            System.out.println("rowkey获取的值为空，请检查："+rowkeyline+"这一列的值是否有问题");
-            System.exit(1);
+            System.out.println(splited+"rowkey获取的值为空，请检查："+rowkeyline+"这一列的值是否有问题");
+            //System.exit(1);
         }
 
         return rowkeybytes;
@@ -122,12 +123,45 @@ public class BulkLoadUntils {
      * @param splited
      * @return
      */
-    public static Put columnPut(byte[] rowkeybytes,String[] splited){
+    public static Put columnPut(byte[] rowkeybytes,String[] splited,String columnFamily,String columnsName,String columnsName_qua){
         Put put = new Put(rowkeybytes);
-        put.addColumn("info".getBytes(), "time".getBytes(), splited[0].getBytes());
+        /*put.addColumn("info".getBytes(), "time".getBytes(), splited[0].getBytes());
         put.addColumn("info".getBytes(), "content".getBytes(), splited[2].getBytes());
         put.addColumn("info".getBytes(), "frequency".getBytes(), splited[3].getBytes());
-        put.addColumn("info".getBytes(), "comment".getBytes(), splited[4].getBytes());
+        put.addColumn("info".getBytes(), "comment".getBytes(), splited[4].getBytes());*/
+
+        //获取相应数组
+        List<String> columnFamilyList = Arrays.asList(columnFamily.split(","));
+        List<String> columnsNameList = Arrays.asList(columnsName.split(","));
+        List<String> columnsName_quaList = Arrays.asList(columnsName_qua.split(","));
+
+        //判断columnFamilyArray列族数组所有的值在columnsNameArray数组中都有
+        if(columnsNameList.containsAll(columnFamilyList)){
+            System.out.println("列族和列配置正确");
+        }else{
+            System.out.println("列族和列配置不正确，需要查看所有列族是否都在columnsName中");
+        }
+
+
+       /* columnsName_qua=1,3,2,4
+        columnsName=info,time,content,comment,f1,frequency*/
+
+        //循环列族，在内嵌循环列
+        int quatmp = 0;//目的是获取列的值，定位到哪一列
+        for (String cols:columnFamilyList) {
+            int i = columnsNameList.indexOf(cols);
+
+            for (int j = 1; j < columnsNameList.size(); j++) {
+                if ( i+j >= columnsNameList.size() || columnFamily.contains(columnsNameList.get(i + j))) {
+                    break ;
+                }
+                put.addColumn(cols.getBytes(), columnsNameList.get(i+j).getBytes(), splited[Integer.parseInt(columnsName_quaList.get(quatmp))].getBytes());
+                quatmp++;
+            }
+
+        }
+
+
         return put;
     }
 

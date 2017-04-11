@@ -9,6 +9,9 @@ import org.apache.hadoop.hbase.client.Connection;
 import org.apache.hadoop.hbase.client.ConnectionFactory;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * Created by yunchen on 2017/3/29.
  */
@@ -47,7 +50,7 @@ public class testmain {
         }*/
 
 
-        String num = "1";
+/*        String num = "1";
         String[] numarr = num.split(",");
         if (numarr.length == 1) {
             System.out.println("长度为1==========" + numarr[0]);
@@ -56,7 +59,37 @@ public class testmain {
             for (int i = 0; i < numarr.length; i++) {
                 System.out.println("第一个" + i + "的值为:" + numarr[i]);
             }
+        }*/
+
+/*        String abc1 = "a";
+        System.out.println("abc"+1);*/
+
+
+        List<String> aa = new ArrayList<>();
+        List<String> bb = new ArrayList<>();
+
+        aa.add("fam2");
+        aa.add("qua3");
+
+        bb.add("fam2");
+        bb.add("qua3");
+        bb.add("qua4");
+
+        if(bb.containsAll(aa)){
+            System.out.println("succ");
+        }else{
+            System.out.println("error");
         }
+
+        System.out.println(aa.indexOf("qua3"));
+
+        int i = 0;
+        for (int j = 0; j < bb.size(); j++) {
+            i++;
+        }
+        System.out.println(i);
+
+
     }
 
 }

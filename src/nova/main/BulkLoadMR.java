@@ -48,6 +48,8 @@ import org.apache.hadoop.mapreduce.lib.output.FileOutputFormat;
 
 public class BulkLoadMR {
 
+    //TODO 想办法把处理到哪一行的日志打印出来，这样方便排查错误
+    //TODO 还有一些输出信息也打印出，不知道怎么在map中打印出日志来
     public static void main(String[] args) throws Exception {
 
 
@@ -72,6 +74,8 @@ public class BulkLoadMR {
         String substringend = PropertiesUtils.get_NameValues(config_path,"substringend");
         String conbinerowkey = PropertiesUtils.get_NameValues(config_path,"conbinerowkey");
         String HowNumLine = PropertiesUtils.get_NameValues(config_path,"HowNumLine");
+        String columnsName = PropertiesUtils.get_NameValues(config_path,"columnsName");
+        String columnsName_qua = PropertiesUtils.get_NameValues(config_path,"columnsName_qua");
 
         //2，创建hbase/hdfs conf
         Configuration hconf = new Configuration();
@@ -97,6 +101,9 @@ public class BulkLoadMR {
         conf.set("substringend",substringend);
         conf.set("HowNumLine",HowNumLine);
         conf.set("splitType",splitType);
+        conf.set("columnFamily",columnFamily);
+        conf.set("columnsName",columnsName);
+        conf.set("columnsName_qua",columnsName_qua);
 
         //6，生成hfile文件
 

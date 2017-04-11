@@ -4,6 +4,12 @@ import java.util.Iterator;
 import java.util.TreeSet;
 import org.apache.hadoop.hbase.util.Bytes;
 
+/**
+ * rowkey这个package代码是来源于github
+ *
+ * 代码来源：https://github.com/bdifn/hbase-tools
+ */
+
 public class HashChoreWoker implements SplitKeysCalculator{
     //随机取机数目
     private int baseRecord;
