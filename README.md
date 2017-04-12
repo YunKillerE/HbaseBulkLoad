@@ -1,8 +1,13 @@
-# HbaseBulkLoad
-基于BulkLoad的通用的hbase导入程序
 
+# 基于BulkLoad的通用的hbase导入程序
+
+
+
+## 配置文件
 
    [配置文件介绍](https://github.com/jimmy-src/HbaseBulkLoad/wiki/%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6)
+   
+   配置文件也可以直接看src/config.properties文件，里面也有比较详细的解释
 
 
 ## 原理
