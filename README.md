@@ -1,7 +1,7 @@
 
 # 基于BulkLoad的通用的hbase导入程序
 
-[HBase Rowkey的散列与预分区设计]()
+[HBase Rowkey的散列与预分区设计](https://github.com/jimmy-src/HbaseBulkLoad/wiki/HBase-Rowkey%E7%9A%84%E6%95%A3%E5%88%97%E4%B8%8E%E9%A2%84%E5%88%86%E5%8C%BA%E8%AE%BE%E8%AE%A1)
 
 ## 配置文件
 
