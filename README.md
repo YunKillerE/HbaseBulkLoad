@@ -35,8 +35,8 @@
  
  1，建表预分区
   
-      1，hash方式预分区，对应的rowkey设计也要采用hash
-      2，partition方式预分区，对应的rowkey设计要结合预分区个数取模
+      1，hash方式预分区，对应的rowkey设计也要采用hash
+      2，partition方式预分区，对应的rowkey设计要结合预分区个数取模
  
  2，rowkey的设计
  
